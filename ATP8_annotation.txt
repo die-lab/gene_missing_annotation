@@ -32,7 +32,7 @@ for species in $(cat $list_code)
 echo 'hmmscanning every downloaded genome, looking fot whats missing'
 for species in $(cat $list_code)
     do hmmsearch -o $species/$species'.out' $gene'.hmm' $species/$species'.fasta'
-    /home/PERSONALE/diego.carli2/app/gene_missing_annotation/split.hmm.files.py --input_files $species/$species'.out'
+    python /home/PERSONALE/diego.carli2/app/gene_missing_annotation/split.hmm.files.py --input_file $species/$species'.out'
     cd $species/$species'.output_files'
     for outfile in $(python /home/PERSONALE/diego.carli2/app/gene_missing_annotation/find_files_unusual_size.py $PWD | awk -F ":" '{print $1}')
         do python /home/PERSONALE/diego.carli2/app/gene_missing_annotation/read.hmm.output.py $species $outfile
@@ -40,3 +40,4 @@ for species in $(cat $list_code)
     python /home/PERSONALE/diego.carli2/app/my_alias/extract_nc_regions.py $species'.fasta' $species'.gff3' $species'.nc.fasta'
     cd $working_directory
     done
+
